@@ -77,7 +77,12 @@ class Canvas():
 
 
     def draw_line(self, x1, y1, x2, y2):
-        pass
+        if x1 == x2:
+            for i in range(y1, y2 + 1):
+                self._canvas[x1][i] = 'x'
+        elif y1 == y2:
+            for i in range(x1, x2 + 1):
+                self._canvas[i][y1] = 'x'
 
     def draw_canvas(self):
         if self.is_canvas():
@@ -123,4 +128,6 @@ if __name__ == "__main__":
             if result == "CINV":
                 print('Invalid parameters for C')
                 print('Usage: C w h, where both w and h are integers, the former is the width and h is the height')
+            else:
+                print(result)
         canvas.draw_canvas()
