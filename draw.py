@@ -44,10 +44,6 @@ class Canvas():
         return (w, h)
     def create(self, w, h):
         self._canvas = np.zeros((h, w), str)
-        self._canvas[1][2] = 'x'
-        self._canvas[1][3] = 'x'
-        self._canvas[1][4] = 'x'
-        self._canvas[1][5] = 'x'
 
     def draw_canvas(self):
         if self.is_canvas():
@@ -61,14 +57,15 @@ class Canvas():
                     if x == 0 or x == h+1:
                         print('-', end = '')
                     else:
-                        character = self._canvas[x][y]
-                        print(self._canvas[x][y], end = '')
+                        character = self._canvas[x-1][y]
+                        if character == '':
+                            character = ' '
+                        print(character, end = '')
                 if x == 0 or x == h+1:
                     print('-')
                 else:
                     print('|')
             print()
-            print(self._canvas)
 
 
 if __name__ == "__main__":
