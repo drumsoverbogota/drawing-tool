@@ -60,7 +60,7 @@ class DrawTestCase(unittest.TestCase):
 
 
         self.canvas.execute("L 1 1 1 5")
-        self.assertEqual(self.canvas.get_canvas(), testarray)
+        self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
 
 if __name__ == '__main__':
     unittest.main()

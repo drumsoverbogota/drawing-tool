@@ -19,6 +19,10 @@ class Canvas():
     def is_quit(self):
         return self._quit
 
+    def get_canvas(self):
+        return self._canvas
+
+
     def execute(self, command):
         match = re.match("([CLRBQclrbq])\s*(\d*)?\s*(\d*)?\s*(\w*)?\s*(\d*)?", command)
         if match:
@@ -31,7 +35,33 @@ class Canvas():
                 except:
                     return "CINV"
             if match.group(1).lower() == 'l':
-                pass
+                try:
+                    x1 = int(match.group(2))
+                    y1 = int(match.group(3))
+                    x2 = int(match.group(4))
+                    y2 = int(match.group(5))
+                except:
+                    return "LINV"
+                
+                if x1 > x2:
+                    aux = x1
+                    x1 = x2
+                    x2 = aux
+
+                if y1 > y2:
+                    aux = y1
+                    y1 = y2
+                    y2 = aux
+                
+                w, h = self.size()
+                if w <= (x1 or x2) or h <= (y1 or y2):
+                    return ("LRANGE")
+
+                if x1 == x2 or y1 == y2:
+                    self.draw_line(x1,y1,x2,y2)
+                    return True
+                else:
+                    return "LSTR8L"
             if match.group(1).lower() == 'r':
                 pass
             if match.group(1).lower() == 'b':
@@ -44,6 +74,10 @@ class Canvas():
         return (w, h)
     def create(self, w, h):
         self._canvas = np.zeros((h, w), str)
+
+
+    def draw_line(self, x1, y1, x2, y2):
+        pass
 
     def draw_canvas(self):
         if self.is_canvas():
