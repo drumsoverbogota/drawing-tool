@@ -31,7 +31,7 @@ class DrawTestCase(unittest.TestCase):
         self.assertEqual(self.canvas.size(), (1,2))
 
     def test_draw_line(self):
-        """Lets you draw a straight line?"""
+        """Let you draw a straight line?"""
 
         #test input errors
         self.assertEqual(self.canvas.execute("L"), "LINV")
@@ -43,6 +43,7 @@ class DrawTestCase(unittest.TestCase):
         #test out of range errors
         self.canvas.execute("C 3 3")
         self.assertEqual(self.canvas.execute("L 0 0 0 3"), "LRANGE")
+        self.assertEqual(self.canvas.execute("L 1 1 1 4"), "LRANGE")
 
         #test not straight lines
         self.canvas.execute("C 9 9")
@@ -57,10 +58,78 @@ class DrawTestCase(unittest.TestCase):
         testarray[1][3] = 'x'
         testarray[1][4] = 'x'
         testarray[1][5] = 'x'
+        
+        """
+        testarray = np.array(
+        [
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ], str)
+        """
 
+        testarray = np.array(
+        [
+        ['x','x','x','x','x','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ], str)
 
         self.canvas.execute("L 1 1 1 5")
         self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
 
+        #test line drawing starting from the end to the beginning
+        self.canvas.execute("C 9 9")
+
+
+        self.canvas.execute("L 1 5 1 1")
+        self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
+    def test_draw_rectangle(self):
+        """Can you draw a square?"""
+
+        #test input errors
+        self.assertEqual(self.canvas.execute("R"), "RINV")
+        self.assertEqual(self.canvas.execute("R x x x x"), "RINV")
+        self.assertEqual(self.canvas.execute("R x 2 3 4"), "RINV")
+        self.assertEqual(self.canvas.execute("R 23 4 2 x"), "RINV")
+        self.assertEqual(self.canvas.execute("R 2 2 2 x"), "RINV")
+
+        #test out of range errors
+        self.canvas.execute("C 3 3")
+        self.assertEqual(self.canvas.execute("R 0 0 2 3"), "RRANGE")
+        self.assertEqual(self.canvas.execute("R 1 1 2 4"), "RRANGE")
+
+        #test square drawing
+        self.canvas.execute("C 9 9")
+        testarray = np.zeros((9, 9), str)
+
+        testarray = np.array(
+        [
+        ['','x','x','x','x','','','',''],
+        ['','x','','','x','','','',''],
+        ['','x','x','x','x','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ], str)
+
+        self.canvas.execute("R 2 1 5 3")
+        self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
+    
 if __name__ == '__main__':
     unittest.main()

@@ -42,17 +42,6 @@ class Canvas():
                     y2 = int(match.group(5))
                 except:
                     return "LINV"
-                
-                if x1 > x2:
-                    aux = x1
-                    x1 = x2
-                    x2 = aux
-
-                if y1 > y2:
-                    aux = y1
-                    y1 = y2
-                    y2 = aux
-                
                 w, h = self.size()
                 if w <= (x1 or x2) or h <= (y1 or y2):
                     return ("LRANGE")
@@ -63,7 +52,23 @@ class Canvas():
                 else:
                     return "LSTR8L"
             if match.group(1).lower() == 'r':
-                pass
+                try:
+                    x1 = int(match.group(2))
+                    y1 = int(match.group(3))
+                    x2 = int(match.group(4))
+                    y2 = int(match.group(5))
+                except:
+                    return "RINV"
+                w, h = self.size()
+                if w <= (x1 or x2) or h <= (y1 or y2):
+                    return ("RRANGE")
+
+                self.draw_line(x1,y1,x2,y1)
+                self.draw_line(x1,y1,x1,y2)
+                self.draw_line(x1,y2,x2,y2)
+                self.draw_line(x2,y1,x2,y2)
+
+                return True
             if match.group(1).lower() == 'b':
                 pass
             if match.group(1).lower() == 'q':
@@ -76,13 +81,22 @@ class Canvas():
         self._canvas = np.zeros((h, w), str)
 
 
-    def draw_line(self, x1, y1, x2, y2):
+    def draw_line(self, x1, y1, x2, y2, character = 'x'):
+        if x1 > x2:
+            aux = x1
+            x1 = x2
+            x2 = aux
+        if y1 > y2:
+            aux = y1
+            y1 = y2
+            y2 = aux
+
         if x1 == x2:
             for i in range(y1, y2 + 1):
-                self._canvas[x1][i] = 'x'
+                self._canvas[i][x1] = character
         elif y1 == y2:
             for i in range(x1, x2 + 1):
-                self._canvas[i][y1] = 'x'
+                self._canvas[y1][i] = character
 
     def draw_canvas(self):
         if self.is_canvas():
