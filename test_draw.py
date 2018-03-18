@@ -94,8 +94,9 @@ class DrawTestCase(unittest.TestCase):
         self.canvas.execute("C 9 9")
         self.canvas.execute("L 5 1 1 1")
         self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
+
     def test_draw_rectangle(self):
-        """Can you draw a square?"""
+        """Command R test, Can you draw a square?"""
 
         #test input errors
         self.assertEqual(self.canvas.execute("R"), "RINV")
@@ -129,5 +130,56 @@ class DrawTestCase(unittest.TestCase):
         self.canvas.execute("R 2 1 5 3")
         self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
     
+    def test_fill_area(self):
+        """Command B test, Can you fill a connected area to a certain (x,y) point?"""
+
+        #test input errors
+        self.canvas.execute("C 3 3")
+        self.assertEqual(self.canvas.execute("B"), "BINV")
+        self.assertEqual(self.canvas.execute("B x x"), "BINV")
+        self.assertEqual(self.canvas.execute("B x x"), "BINV")
+        self.assertEqual(self.canvas.execute("B x x x"), "BINV")
+        self.assertEqual(self.canvas.execute("B 2 x x"), "BINV")
+        self.assertEqual(self.canvas.execute("B x 2 x"), "BINV")
+        self.assertEqual(self.canvas.execute("B 1 1"), True)
+
+        #test out of range errors
+        self.canvas.execute("C 3 3")
+        self.assertEqual(self.canvas.execute("B 0 1 c"), "BRANGE")
+        self.assertEqual(self.canvas.execute("B 0 4 c"), "BRANGE")
+        testarray = np.array(
+        [
+        ['','x','x','x','x','x','','',''],
+        ['','x','c','c','c','x','','',''],
+        ['','x','c','c','c','x','','',''],
+        ['','x','x','x','x','x','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ], str)
+
+
+        self.canvas.execute("C 9 9")
+        self.canvas.execute("R 2 1 6 4")
+        self.canvas.execute("B 3 3 c")
+        self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
+
+        testarray = np.array(
+        [
+        ['','t','t','t','t','t','','',''],
+        ['','t','c','c','c','t','','',''],
+        ['','t','c','c','c','t','','',''],
+        ['','t','t','t','t','t','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ['','','','','','','','',''],
+        ], str)
+
+        self.canvas.execute("B 2 1 t")
+        self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
 if __name__ == '__main__':
     unittest.main()
