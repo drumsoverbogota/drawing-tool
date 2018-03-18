@@ -87,14 +87,12 @@ class DrawTestCase(unittest.TestCase):
         ['','','','','','','','',''],
         ], str)
 
-        self.canvas.execute("L 1 1 1 5")
+        self.canvas.execute("L 1 1 5 1")
         self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
 
         #test line drawing starting from the end to the beginning
         self.canvas.execute("C 9 9")
-
-
-        self.canvas.execute("L 1 5 1 1")
+        self.canvas.execute("L 5 1 1 1")
         self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
     def test_draw_rectangle(self):
         """Can you draw a square?"""

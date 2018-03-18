@@ -43,7 +43,11 @@ class Canvas():
                 except:
                     return "LINV"
                 w, h = self.size()
-                if w <= (x1 or x2) or h <= (y1 or y2):
+
+
+                if (x1 > w or x2 > w) or (y1 > h or y2 > h):
+                    return ("LRANGE")
+                if (x1 == 0 or x2 == 0)  or (y1 == 0 or y2 == 0):
                     return ("LRANGE")
 
                 if x1 == x2 or y1 == y2:
@@ -60,7 +64,9 @@ class Canvas():
                 except:
                     return "RINV"
                 w, h = self.size()
-                if w <= (x1 or x2) or h <= (y1 or y2):
+                if (x1 > w or x2 > w) or (y1 > h or y2 > h):
+                    return ("RRANGE")
+                if (x1 == 0 or x2 == 0)  or (y1 == 0 or y2 == 0):
                     return ("RRANGE")
 
                 self.draw_line(x1,y1,x2,y1)
@@ -93,10 +99,10 @@ class Canvas():
 
         if x1 == x2:
             for i in range(y1, y2 + 1):
-                self._canvas[i][x1] = character
+                self._canvas[i-1][x1-1] = character
         elif y1 == y2:
             for i in range(x1, x2 + 1):
-                self._canvas[y1][i] = character
+                self._canvas[y1-1][i-1] = character
 
     def draw_canvas(self):
         if self.is_canvas():
