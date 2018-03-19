@@ -2,7 +2,10 @@ import numpy as np
 import re
 
 class Canvas():
-
+    """
+    Canvas class
+    Provides a class to handle a simple drawing program.
+    """
 
     _canvas = None
     _quit   = False
