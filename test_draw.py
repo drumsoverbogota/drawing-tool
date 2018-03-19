@@ -51,21 +51,6 @@ class DrawTestCase(unittest.TestCase):
 
         #test line drawing
         self.canvas.execute("C 9 9")
-        
-        """
-        testarray = np.array(
-        [
-        ['','','','','','','','',''],
-        ['','','','','','','','',''],
-        ['','','','','','','','',''],
-        ['','','','','','','','',''],
-        ['','','','','','','','',''],
-        ['','','','','','','','',''],
-        ['','','','','','','','',''],
-        ['','','','','','','','',''],
-        ['','','','','','','','',''],
-        ], str)
-        """
 
         testarray = np.array(
         [
@@ -105,7 +90,6 @@ class DrawTestCase(unittest.TestCase):
 
         #test square drawing
         self.canvas.execute("C 9 9")
-        testarray = np.zeros((9, 9), str)
 
         testarray = np.array(
         [
