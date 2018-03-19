@@ -96,7 +96,8 @@ class Canvas():
                     self.fill(x, y, character, original)
                 return True
             if match.group(1).lower() == 'q':
-                pass
+                self._quit = True 
+                return True
         return 'NOP'
 
 

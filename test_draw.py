@@ -181,5 +181,10 @@ class DrawTestCase(unittest.TestCase):
 
         self.canvas.execute("B 2 1 t")
         self.assertTrue(np.array_equal(self.canvas.get_canvas(), testarray))
+
+    def test_quit(self):
+        """Command Q test, Can you quit the application?"""
+        self.canvas.execute("Q")
+        self.assertTrue(self.canvas.is_quit())
 if __name__ == '__main__':
     unittest.main()
