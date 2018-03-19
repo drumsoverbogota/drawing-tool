@@ -24,7 +24,7 @@ class Canvas():
 
 
     def execute(self, command):
-        match = re.match("([CLRBQclrbq])\s*(\d*)?\s*(\d*)?\s*(\w*)?\s*(\d*)?", command)
+        match = re.match("([CLRBQclrbq])\s*(\d+)?\s*(\d+)?\s*(\w+)?\s*(\d+)?", command)
         if match:
             if match.group(1).lower() == 'c':
                 try:
@@ -76,16 +76,50 @@ class Canvas():
 
                 return True
             if match.group(1).lower() == 'b':
-                pass
+                try:
+                    x = int(match.group(2))
+                    y = int(match.group(3))
+                    character = match.group(4)
+                    if character == None:
+                        character = ''
+                except:
+                    return "BINV"
+
+                w, h = self.size()
+                if x > w or y > h:
+                    return ("BRANGE")
+                if x == 0  or y == 0:
+                    return ("BRANGE")
+
+                original = self._canvas[y - 1][x - 1]
+                if original != character:
+                    self.fill(x, y, character, original)
+                return True
             if match.group(1).lower() == 'q':
                 pass
         return 'NOP'
+
+
+
     def size(self):
         h, w = self._canvas.shape
         return (w, h)
     def create(self, w, h):
         self._canvas = np.zeros((h, w), str)
 
+    def fill(self, x, y, character, original):
+        current = self._canvas[y - 1][x - 1]
+        if original == current:
+            self._canvas[y - 1, x - 1] = character
+            if x - 1 > 0:
+                self.fill(x - 1, y, character, original)
+            if y - 1 > 0:
+                self.fill(x, y - 1, character, original)
+            w, h = self.size()
+            if x + 1 <= w:
+                self.fill(x + 1, y, character, original)
+            if y + 1 <= h:
+                self.fill(x, y + 1, character, original)
 
     def draw_line(self, x1, y1, x2, y2, character = 'x'):
         if x1 > x2:
