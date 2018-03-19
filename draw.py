@@ -173,6 +173,7 @@ if __name__ == "__main__":
         if not canvas.is_canvas():
             print('Hello!')
             print('Please use the following command to create a new canvas')
+            print('C w h, where both w and h are integers, the former is the width and h is the height')
             quit = True
         inp = input('enter command: ')
 
@@ -181,8 +182,26 @@ if __name__ == "__main__":
             pass
         else:
             if result == "CINV":
-                print('Invalid parameters for C')
+                print('Invalid parameters for command C')
                 print('Usage: C w h, where both w and h are integers, the former is the width and h is the height')
+
+            elif result == "LINV":
+                print('Invalid parameters for command L')
+                print('Usage: L x1 y1 x2 y2, where x1, y1, x2, y2 are integers, (x1,y1) represents the beginning of the line and (x2, y2) the end. Currently only horizontal or vertical lines are supported. The lines will be drawn with the \'x\' character by default')
+            elif result == "LRANGE":
+                print('Out of range')
+            elif result == "LSTR8L":
+                print('Only Horizontal or vertical Lines supported')
+            elif result == "RINV":
+                print('Invalid parameters for command R')
+                print('Usage: R x1 y1 x2 y2, where x1, y1, x2, y2 are integers, (x1,y1) represents the beginning of the square and (x2, y2) the end. The rectangle will be drawn with the \'x\' character by default')
+            elif result == "RRANGE":
+                print('Out of range')
+            elif result == "BINV":
+                print('Invalid parameters for command B')
+                print('Usage: B x y (c), where x and y are integers and c is an optinal character (in case no character is given the empty character is used by default). (x,y) is the position where the area will be filled.')
+            elif result == "BRANGE":
+                print('Out of range')
             else:
                 print(result)
         canvas.draw_canvas()

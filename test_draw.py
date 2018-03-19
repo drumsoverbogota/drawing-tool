@@ -45,19 +45,12 @@ class DrawTestCase(unittest.TestCase):
         self.assertEqual(self.canvas.execute("L 0 0 0 3"), "LRANGE")
         self.assertEqual(self.canvas.execute("L 1 1 1 4"), "LRANGE")
 
-        #test not straight lines
+        #test only horizontal and vertical lines
         self.canvas.execute("C 9 9")
         self.assertEqual(self.canvas.execute("L 1 1 5 5"), "LSTR8L")
 
         #test line drawing
         self.canvas.execute("C 9 9")
-        testarray = np.zeros((9, 9), str)
-
-        testarray[1][1] = 'x'
-        testarray[1][2] = 'x'
-        testarray[1][3] = 'x'
-        testarray[1][4] = 'x'
-        testarray[1][5] = 'x'
         
         """
         testarray = np.array(
